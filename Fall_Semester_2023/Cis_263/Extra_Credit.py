@@ -1,3 +1,4 @@
+
 class KruskalsExtraCredit:
     #creating an object class to make graphs
     def __init__(self,nodes):
@@ -64,18 +65,24 @@ class KruskalsExtraCredit:
                 edgesMST += 1
                 self.connect_subtrees(parent, subtrees, a, b)
                 min_span_tree.append([n1, n2, weight])
-                #print(f"Added edge: {n1} - {n2} with weight {weight}")
+                
             
         for n1, n2, weight in min_span_tree:
             print ("%d - %d: %d" % (n1, n2, weight))
             
 class Floyd_Warshall:
+    #we need to initialize a self class to make doing this easier for the future
+    #without the init method we would have to create a new object each time
+    #now we can make any graph we want to solve with Floys Warshall
 	def __init__(self, graph, vertices):
 		self.graph = graph
 		self.num_vertices = vertices 
+        #Part of the algorithm is making values that you can't traverse for that step infinity so 
+        #it is just easier to create this object for later use
 		self.INF = float('inf')
 		self.distance = self.initalize_distance_matrix()
-        
+    
+    #    
 	def floyd_warshall(self):
 		for k in range(self.num_vertices):
 			for i in range(self.num_vertices):
