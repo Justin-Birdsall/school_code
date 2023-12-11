@@ -9,20 +9,23 @@ class extracreditgraphing:
         self.graph.append([n1,n2,weight])
         
     def find_subtree(self,parent,i):
+        #if the subtree is just one node 
         if parent[i] == i:
             return i 
-        return self.find_suubtree(parent,parent[i])
+        return self.find_subtree(parent,parent[i])
     
     def connect_subtrees(self, parent, subtrees, a , b):
+        #go and grab the subtrees in find subtree
         a_root = self.find_subtree(parent, a)
         b_root = self.find_subtree(parent,b)
+        #
         if subtrees[a_root] < subtrees[b_root]:
             parent[a_root]  = b_root
         elif subtrees[b_root] < subtrees[a_root]:
             parent[b_root]  =  a_root            
         else:
             parent[b_root] = a_root
-            findtree_sizes[a_root] += 1
+            subtrees[a_root] += 1
     
     #main computing for kruskals putting all the classes together
     #the first thing that we need to do is sort for ease
@@ -51,15 +54,17 @@ class extracreditgraphing:
             subtrees.append(0)
     
         while edgesMST < (self.nodes -1):
-            n1, n2, weight = self.graph[1]
-            i = i+1
+            n1, n2, weight = self.graph[i]
+            i += 1
             
             a = self.find_subtree(parent, n1)
             b = self.find_subtree(parent, n2)
         
             if a!= b:
-                edgesMST = edgesMST + 1
+                edgesMST += 1
                 self.connect_subtrees(parent, subtrees, a, b)
+                min_span_tree.append([n1, n2, weight])
+                #print(f"Added edge: {n1} - {n2} with weight {weight}")
             
         for n1, n2, weight in min_span_tree:
             print ("%d - %d: %d" % (n1, n2, weight))
