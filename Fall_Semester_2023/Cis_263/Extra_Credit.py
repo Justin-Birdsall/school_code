@@ -1,4 +1,4 @@
-class extracreditgraphing:
+class KruskalsExtraCredit:
     #creating an object class to make graphs
     def __init__(self,nodes):
         self.nodes = nodes
@@ -68,7 +68,106 @@ class extracreditgraphing:
             
         for n1, n2, weight in min_span_tree:
             print ("%d - %d: %d" % (n1, n2, weight))
-example_graph = extracreditgraphing(9)
+            
+class Floyd_Warshall:
+	def __init__(self, graph, vertices):
+		self.graph = graph
+		self.num_vertices = vertices 
+		self.INF = float('inf')
+		self.distance = self.initalize_distance_matrix()
+        
+	def floyd_warshall(self):
+		for k in range(self.num_vertices):
+			for i in range(self.num_vertices):
+				for j in range(self.num_vertices):
+					self.distance[i][j] = min(self.distance[i][j], self.distance[i][k] + self.distance[k][j])
+		self.print_distance_matrix()
+        
+    
+	def initalize_distance_matrix(self):
+		result = []
+		for i in self.graph:
+			result.append(self.copy_elements(i))
+		return result
+    
+	def copy_elements(self, elements):
+		result = []
+		for i in elements:
+			#add each element to the result 
+			result.append(i)
+		return result
+	def print_distance_matrix(self):
+		for i in range(self.num_vertices):
+			for j in range(self.num_vertices):
+				print(self.distance[i][j], end = " ")
+			print(" ")
+
+class efficentCaching:
+    class Node:
+ 
+        def __init__(self, key, value):
+            self.key = key
+            self.val = value
+            self.prev = None
+            self.next = None
+
+    class LeastRecentlyUsedCache:
+        def __init__(self, capacity):
+            self.capacity = capacity
+            self.hashMap = dict()
+            self.head = Node('#', 0)
+            self.tail = Node('', 0)
+            self.head.next = self.tail
+            self.tail.prev = self.head
+        
+        def get(self, key):
+            if key in self.hashMap:
+                node = self.hashMap[key]
+                self._remove(node)
+                self._add(node)
+                return node.val
+            else:
+                return -1
+        def put(self, key, value):
+            if key in self.hashMap:
+                self._remove(self.hashMap[key])
+            newNode = self.Node(key, value)
+            self._add(newNode)
+            self.hashMap[key] = newNode
+            if len(self.hashMap) > self.capacity:
+                nodeToRemove = self.tail.prev
+                self._remove(nodeToRemove)
+                del self.hashMap[nodeToRemove.key]
+        def remove_node(self, node):
+            prevNode = node.prev
+            nextNode = node.next
+            prevNode.next = nextNode
+            nextNode.prev = prevNode
+            
+        def add_node(self, node):
+            nextNode = self.head.next
+            previousNode = self.head
+            previousNode.next = node
+            nextNode.prev = node
+            node.next = nexNode
+            node.prev = previousNode
+
+
+
+#------------------------------------------------------------------------------------------------------------------------
+G = [
+[0, 3, float('inf'), 5],
+[2, 0, float('inf'), 4],
+[float('inf'), 1, 0, float('inf')],
+[float('inf'), float('inf'), 2, 0] 
+]
+
+
+vertices = 4
+fw_instance = Floyd_Warshall(G, vertices)
+fw_instance.floyd_warshall()
+
+example_graph = KruskalsExtraCredit(9)
 example_graph.add_edge(0, 1, 4)
 example_graph.add_edge(0, 2, 7)
 example_graph.add_edge(1, 2, 11)
