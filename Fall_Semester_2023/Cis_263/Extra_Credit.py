@@ -1,4 +1,10 @@
+"""
+Resources:
 
+
+
+
+"""
 class KruskalsExtraCredit:
     #creating an object class to make graphs
     def __init__(self,nodes):
@@ -33,12 +39,15 @@ class KruskalsExtraCredit:
     #That we we already know smallest weight and the biggest
     #See if that weight already has a conncting node in our MST
     # If i isn't then we add it.
+    
     def kruskals(self):
         #initalize our retun
         min_span_tree = []
         
-        #sorting our by weight in reverse order. https://blogboard.io/blog/knowledge/python-sorted-lambda/
-        self.graph = sorted(self.graph, key=lambda graph: -graph[2]) 
+        #sorting our by weight in order. https://blogboard.io/blog/knowledge/python-sorted-lambda/
+        #this makes sure that the weight of the edges goes from smallest to biggest
+        #makes processing a little bit easier 
+        self.graph = sorted(self.graph, key=lambda graph: graph[2]) 
         
         #initalize our parent and subtree see if we can add them together for mst
         parent = []
@@ -106,7 +115,9 @@ class Floyd_Warshall:
 	def print_distance_matrix(self):
 		for i in range(self.num_vertices):
 			for j in range(self.num_vertices):
+                #need the end "" so that way each element doesn't print on a new line
 				print(self.distance[i][j], end = " ")
+            #need a way to make a new line
 			print(" ")
 
 class efficentCaching:
@@ -156,38 +167,39 @@ class efficentCaching:
             previousNode = self.head
             previousNode.next = node
             nextNode.prev = node
-            node.next = nexNode
+            node.next = nextNode
             node.prev = previousNode
 
 
+#Calling functions and Initalizing their respective algorithims 
+#-----------------------------------------------------------------------------------------------------------------------
 
-#------------------------------------------------------------------------------------------------------------------------
+print ("Floyd Warshall Matrix \n")
+#Floyd Warshall and it's A0 state 
 G = [
-[0, 3, float('inf'), 5],
-[2, 0, float('inf'), 4],
-[float('inf'), 1, 0, float('inf')],
-[float('inf'), float('inf'), 2, 0] 
+[0, 3, float('inf'), 7],
+[8, 0, 2, float('inf')],
+[5, float('inf'), 0, 1],
+[2, float('inf'), float('inf'), 0] 
 ]
 
 
 vertices = 4
 fw_instance = Floyd_Warshall(G, vertices)
 fw_instance.floyd_warshall()
-
-example_graph = KruskalsExtraCredit(9)
-example_graph.add_edge(0, 1, 4)
-example_graph.add_edge(0, 2, 7)
-example_graph.add_edge(1, 2, 11)
-example_graph.add_edge(1, 3, 9)
-example_graph.add_edge(1, 5, 20)
-example_graph.add_edge(2, 5, 1)
-example_graph.add_edge(3, 6, 6)
-example_graph.add_edge(3, 4, 2)
-example_graph.add_edge(4, 6, 10)
-example_graph.add_edge(4, 8, 15)
-example_graph.add_edge(4, 7, 5)
-example_graph.add_edge(4, 5, 1)
-example_graph.add_edge(5, 7, 3)
-example_graph.add_edge(6, 8, 5)
-example_graph.add_edge(7, 8, 12)
+#this is the same example as in Profs notes and the one we did in class
+#the way the code works expects the node to start at 0 
+#so if you don't have a 0 node then it will error (recursive 998)
+print ("\n Kruskals minimum spanning tree represented in nodes \n " )
+example_graph = KruskalsExtraCredit(7)
+example_graph.add_edge(0, 5, 10)
+example_graph.add_edge(0, 1, 28)
+example_graph.add_edge(1, 2, 16)
+example_graph.add_edge(2, 3, 12)
+example_graph.add_edge(3, 4, 22)
+example_graph.add_edge(4, 5, 25)
+example_graph.add_edge(6, 4, 24)
+example_graph.add_edge(6, 3, 18)
+example_graph.add_edge(6, 1, 14)
+print()
 example_graph.kruskals()
