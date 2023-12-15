@@ -6,17 +6,22 @@ LINK TO A GOOGLE DOC:
 Kruskals
 --------------------------------------------------------------------------------------
 
+https://www.programiz.com/dsa/kruskal-algorithm
 
+https://www.geeksforgeeks.org/kruskals-minimum-spanning-tree-algorithm-greedy-algo-2/
 
 Floyd Warshall 
 ----------------------------------------------------------------------------------------
 
 https://favtutor.com/blogs/floyd-warshall-algorithm
-
+https://www.programiz.com/dsa/floyd-warshall-algorithm
+https://www.geeksforgeeks.org/floyd-warshall-algorithm-dp-16/
 
 Cache Problem
 ----------------------------------------------------------------------------------------
-
+https://www.geeksforgeeks.org/lru-cache-implementation/
+https://www.geeksforgeeks.org/lru-cache-in-python-using-ordereddict/
+https://www.enjoyalgorithms.com/blog/implement-least-recently-used-cache
 
 Every Problem Just In Case
 --------------------------------------------------------------------------------------
@@ -24,6 +29,14 @@ I want to make it known that I did use ChatGPT at points for this code. I will p
 some examples of what I used it for.
 
 When I was looking into how to do Floyd Warshall in Python I saw this lambda function repeadiatly 
+
+distance = list(map(lambda i: list(map(lambda j: j, i)), G))
+
+I am still kind of new to python while I understand that it is basically a throw away function this syntaxing is a little over my head
+So I asked ChatGPT to turn it into def functions and it did but named them after where I couldn't undertand what it was trying to do.
+Following the code I looked at what it was trying to do and then renamed them to what they are now. I then asked the AI if the naming 
+seemed correct to which it agreed. I only used it to grasp onto concepts or help understand the error I was recieving. 
+I just wanted to make it know that it was used.  
 
 """
 
