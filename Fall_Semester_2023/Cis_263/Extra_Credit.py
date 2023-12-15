@@ -3,8 +3,6 @@ from collections import Counter
 """
 Resources: 
 
-LINK TO A GOOGLE DOC:
-
 Kruskals
 --------------------------------------------------------------------------------------
 
@@ -100,20 +98,21 @@ class KruskalsExtraCredit:
         i = 0
         edgesMST = 0
         
+        #fill our parent with nodes and append subrees with same # of nodes but 0
         for node in range(self.nodes):
             parent.append(node)
             subtrees.append(0)
     
-        #Remeber that edges of graph - 1 == max edges MST
+        #Remember that edges of graph - 1 == max edges MST
         #otherwise we will have a cycle thus not a tree
         #hence why we have self.nodes -1
         while edgesMST < (self.nodes -1):
             n1, n2, weight = self.graph[i]
             i += 1
-            
+            #see if we have subtrees of that node
             a = self.find_subtree(parent, n1)
             b = self.find_subtree(parent, n2)
-        
+            #if they are not connected connect them
             if a!= b:
                 edgesMST += 1
                 self.connect_subtrees(parent, subtrees, a, b)
@@ -133,12 +132,16 @@ class Floyd_Warshall:
         #just a way to shorthand initalize_distance_matrix() 1 word vs 3 type of deal
 		self.distance = self.initalize_distance_matrix()
     
-    #Main computing function of our algoritim     
+    #Main computing function of our algorithm     
 	def floyd_warshall(self):
+        #k is our intermediate node
 		for k in range(self.num_vertices):
+            #from our intermediate node loop through graph
 			for i in range(self.num_vertices):
 				for j in range(self.num_vertices):
+                    #take the minimum distance and path and make it the value of that index
 					self.distance[i][j] = min(self.distance[i][j], self.distance[i][k] + self.distance[k][j])
+        #after looping through print matrix out 
 		self.print_distance_matrix()
         
     
@@ -202,14 +205,22 @@ class efficentCaching:
         #so he have to move it to the back of the cache 
         self.cache.move_to_end(key)
         #this if statement is checking to make sure our cache is not out of bounds
-        if len(self.cache) > self.capacity:
+        if len(self.cache) > self.capacity+1:
             #Check order dict link for further syntax
             #Orderdict normally when you .popitem it will pop the last one on the stack
             #in our situation that would get rid of the most recent accessed element
             #by giving the parameter last = False it now pops the from of the que
             self.cache.popitem(last = False)
- 
-
+    #printing out our miss rate  
+    def print_miss_rate(self):
+        total = self.addCount['total']
+        miss = self.addCount['miss']
+        if total != 0:
+             missRate = miss/total
+             #http://cissandbox.bentley.edu/sandbox/wp-content/uploads/2022-02-10-Documentation-on-f-strings-Updated.pdf
+             print(f"The miss rate of the cache is: {missRate:.2%}")
+        else:
+            print("no data accessed miss rate = none")
 
 
 #Calling functions and Initalizing their respective elements to the algorithims 
@@ -294,3 +305,6 @@ print(cache.cache)
 #miss
 cache.put(0,256)
 print(cache.cache)
+#print missrate
+#should print out around 66% like we theorized 
+cache.print_miss_rate()
