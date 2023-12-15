@@ -1,9 +1,29 @@
 """
-Resources:
+Resources: 
+
+LINK TO A GOOGLE DOC:
+
+Kruskals
+--------------------------------------------------------------------------------------
 
 
 
+Floyd Warshall 
+----------------------------------------------------------------------------------------
 
+https://favtutor.com/blogs/floyd-warshall-algorithm
+
+
+Cache Problem
+----------------------------------------------------------------------------------------
+
+
+Every Problem Just In Case
+--------------------------------------------------------------------------------------
+I want to make it known that I did use ChatGPT at points for this code. I will provide 
+some examples of what I used it for.
+
+When I was looking into how to do Floyd Warshall in Python 
 """
 class KruskalsExtraCredit:
     #creating an object class to make graphs
@@ -190,7 +210,8 @@ fw_instance.floyd_warshall()
 #this is the same example as in Profs notes and the one we did in class
 #the way the code works expects the node to start at 0 
 #so if you don't have a 0 node then it will error (recursive 998)
-print ("\n Kruskals minimum spanning tree represented in nodes \n " )
+print(" ") # <- like having a new line but was formating the Start of Kruskals weird
+print ("Kruskals minimum spanning tree represented in nodes \n " )
 example_graph = KruskalsExtraCredit(7)
 example_graph.add_edge(0, 5, 10)
 example_graph.add_edge(0, 1, 28)
@@ -201,5 +222,5 @@ example_graph.add_edge(4, 5, 25)
 example_graph.add_edge(6, 4, 24)
 example_graph.add_edge(6, 3, 18)
 example_graph.add_edge(6, 1, 14)
-print()
 example_graph.kruskals()
+print(" ")
