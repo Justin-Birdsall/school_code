@@ -23,8 +23,10 @@ Every Problem Just In Case
 I want to make it known that I did use ChatGPT at points for this code. I will provide 
 some examples of what I used it for.
 
-When I was looking into how to do Floyd Warshall in Python 
+When I was looking into how to do Floyd Warshall in Python I saw this lambda function repeadiatly 
+
 """
+
 class KruskalsExtraCredit:
     #creating an object class to make graphs
     def __init__(self,nodes):
@@ -74,8 +76,6 @@ class KruskalsExtraCredit:
         subtrees = []
         
         #set up our iterator and edge counter of MST
-        #Remeber that edges of graph - 1 == max edges MST
-        #otherwise we will have a cycle thus not a tree
         i = 0
         edgesMST = 0
         
@@ -83,6 +83,9 @@ class KruskalsExtraCredit:
             parent.append(node)
             subtrees.append(0)
     
+        #Remeber that edges of graph - 1 == max edges MST
+        #otherwise we will have a cycle thus not a tree
+        #hence why we have self.nodes -1
         while edgesMST < (self.nodes -1):
             n1, n2, weight = self.graph[i]
             i += 1
@@ -95,23 +98,21 @@ class KruskalsExtraCredit:
                 self.connect_subtrees(parent, subtrees, a, b)
                 min_span_tree.append([n1, n2, weight])
                 
-            
+        #loop through the connected nodes and their edge weight and print it   
         for n1, n2, weight in min_span_tree:
             print ("%d - %d: %d" % (n1, n2, weight))
             
 class Floyd_Warshall:
     #we need to initialize a self class to make doing this easier for the future
     #without the init method we would have to create a new object each time
-    #now we can make any graph we want to solve with Floys Warshall
+    #now we can make any graph we want to solve with Floyd Warshall
 	def __init__(self, graph, vertices):
 		self.graph = graph
 		self.num_vertices = vertices 
-        #Part of the algorithm is making values that you can't traverse for that step infinity so 
-        #it is just easier to create this object for later use
-		self.INF = float('inf')
+        #just a way to shorthand initalize_distance_matrix() 1 word vs 3 type of deal
 		self.distance = self.initalize_distance_matrix()
     
-    #    
+    #Main computing function of our algoritim     
 	def floyd_warshall(self):
 		for k in range(self.num_vertices):
 			for i in range(self.num_vertices):
@@ -191,7 +192,7 @@ class efficentCaching:
             node.prev = previousNode
 
 
-#Calling functions and Initalizing their respective algorithims 
+#Calling functions and Initalizing their respective elements to the algorithims 
 #-----------------------------------------------------------------------------------------------------------------------
 
 print ("Floyd Warshall Matrix \n")
@@ -205,12 +206,15 @@ G = [
 
 
 vertices = 4
+#pass in the graph and # of vertices
 fw_instance = Floyd_Warshall(G, vertices)
 fw_instance.floyd_warshall()
+
+
 #this is the same example as in Profs notes and the one we did in class
 #the way the code works expects the node to start at 0 
 #so if you don't have a 0 node then it will error (recursive 998)
-print(" ") # <- like having a new line but was formating the Start of Kruskals weird
+print(" ") # <- like having a new line but was formating the Start of Kruskals tabbed over essentially 
 print ("Kruskals minimum spanning tree represented in nodes \n " )
 example_graph = KruskalsExtraCredit(7)
 example_graph.add_edge(0, 5, 10)
