@@ -1,3 +1,4 @@
+from collections import OrderedDict
 """
 Resources: 
 
@@ -155,54 +156,41 @@ class Floyd_Warshall:
 			print(" ")
 
 class efficentCaching:
-    class Node:
+    # initialise our dictionary(Cache) object
+    def __init__(self, capacity: int):
+        #https://realpython.com/python-ordereddict/ how to use OrderedDict() <- you get more control
+        #make cache object 1. for understanding and 2. for being lazy
+        self.cache = OrderedDict()
+        #we also need to access the capacity passed in
+        self.capacity = capacity
+    
+    
+    def get(self, key: int) -> int:
+        if key not in self.cache:
+            #if the key is not currently present in our dict return -1
+            return -1
+        else:
+            #if key is in the cache move to the end so know it is the most recently accessed one
+            self.cache.move_to_end(key)
+            #returning the value of the key since it is in cache.
+            return self.cache[key]
  
-        def __init__(self, key, value):
-            self.key = key
-            self.val = value
-            self.prev = None
-            self.next = None
 
-    class LeastRecentlyUsedCache:
-        def __init__(self, capacity):
-            self.capacity = capacity
-            self.hashMap = dict()
-            self.head = Node('#', 0)
-            self.tail = Node('', 0)
-            self.head.next = self.tail
-            self.tail.prev = self.head
-        
-        def get(self, key):
-            if key in self.hashMap:
-                node = self.hashMap[key]
-                self._remove(node)
-                self._add(node)
-                return node.val
-            else:
-                return -1
-        def put(self, key, value):
-            if key in self.hashMap:
-                self._remove(self.hashMap[key])
-            newNode = self.Node(key, value)
-            self._add(newNode)
-            self.hashMap[key] = newNode
-            if len(self.hashMap) > self.capacity:
-                nodeToRemove = self.tail.prev
-                self._remove(nodeToRemove)
-                del self.hashMap[nodeToRemove.key]
-        def remove_node(self, node):
-            prevNode = node.prev
-            nextNode = node.next
-            prevNode.next = nextNode
-            nextNode.prev = prevNode
-            
-        def add_node(self, node):
-            nextNode = self.head.next
-            previousNode = self.head
-            previousNode.next = node
-            nextNode.prev = node
-            node.next = nextNode
-            node.prev = previousNode
+    def put(self, key: int, value: int) -> None:
+        self.cache[key] = value
+        #kind of like acessing it putting something into cache makes it the most recently used
+        #so he have to move it to the back of the cache 
+        self.cache.move_to_end(key)
+        #this if statment is 
+        if len(self.cache) > self.capacity:
+            #Check order dict link for further syntaxing
+            #Orderdict normaly when you .popitem it will pop the last one on the stack
+            #in our situation that would get rid of the most recent accesed ellement
+            #by giving the paramater last = False it now pops the fron of the que
+            self.cache.popitem(last = False)
+ 
+ 
+
 
 
 #Calling functions and Initalizing their respective elements to the algorithims 
@@ -241,3 +229,26 @@ example_graph.add_edge(6, 3, 18)
 example_graph.add_edge(6, 1, 14)
 example_graph.kruskals()
 print(" ")
+
+# initializing our cache with the capacity of 2
+cache = efficentCaching(2) 
+ 
+ 
+cache.put(1, 1)
+print(cache.cache)
+cache.put(2, 2)
+print(cache.cache)
+cache.get(1)
+print(cache.cache)
+cache.put(3, 3)
+print(cache.cache)
+cache.get(2)
+print(cache.cache)
+cache.put(4, 4)
+print(cache.cache)
+cache.get(1)
+print(cache.cache)
+cache.get(3)
+print(cache.cache)
+cache.get(4)
+print(cache.cache)
