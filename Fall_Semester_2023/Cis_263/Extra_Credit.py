@@ -1,4 +1,5 @@
 from collections import OrderedDict
+from collections import Counter
 """
 Resources: 
 
@@ -24,12 +25,18 @@ https://www.geeksforgeeks.org/lru-cache-implementation/
 https://www.geeksforgeeks.org/lru-cache-in-python-using-ordereddict/
 https://www.enjoyalgorithms.com/blog/implement-least-recently-used-cache
 
+Wanted to implement part of the cache homework for 351 so I needed to 
+implement a counter that works over multiple functions
+https://www.geeksforgeeks.org/counters-in-python-set-2-accessing-counters/
+https://www.digitalocean.com/community/tutorials/python-counter-python-collections-counter
+
+
 Every Problem Just In Case
 --------------------------------------------------------------------------------------
 I want to make it known that I did use ChatGPT at points for this code. I will provide 
 some examples of what I used it for.
 
-When I was looking into how to do Floyd Warshall in Python I saw this lambda function repeadiatly 
+When I was looking into how to do Floyd Warshall in Python I saw this lambda function repeatably 
 
 distance = list(map(lambda i: list(map(lambda j: j, i)), G))
 
@@ -73,11 +80,11 @@ class KruskalsExtraCredit:
     #main computing for kruskals putting all the classes together
     #the first thing that we need to do is sort for ease
     #That we we already know smallest weight and the biggest
-    #See if that weight already has a conncting node in our MST
+    #See if that weight already has a connecting node in our MST
     # If i isn't then we add it.
     
     def kruskals(self):
-        #initalize our retun
+        #initialize our return
         min_span_tree = []
         
         #sorting our by weight in order. https://blogboard.io/blog/knowledge/python-sorted-lambda/
@@ -161,34 +168,46 @@ class efficentCaching:
         #https://realpython.com/python-ordereddict/ how to use OrderedDict() <- you get more control
         #make cache object 1. for understanding and 2. for being lazy
         self.cache = OrderedDict()
-        #we also need to access the capacity passed in
-        self.capacity = capacity
-    
+        #we also need to access the capacity passed in -1 now so we  
+        #don't have to do self.capacity-1 
+        self.capacity = capacity-1
+        #also need a counter for how many times data has been accessed
+        #internet pointed out this method lets try to implement it
+        self.addCount = Counter({'hit': 0, 'miss': 0, 'total': 0})
+        
     
     def get(self, key: int) -> int:
+        #just increment counter before for loop instead of 
+        #writing it twice for both statements
+        self.addCount['total'] += 1
         if key not in self.cache:
             #if the key is not currently present in our dict return -1
+            self.addCount['miss'] += 1
             return -1
         else:
             #if key is in the cache move to the end so know it is the most recently accessed one
             self.cache.move_to_end(key)
             #returning the value of the key since it is in cache.
+            self.addCount['hit'] += 1
             return self.cache[key]
+        
  
 
     def put(self, key: int, value: int) -> None:
+        #first thing might as well just add to total now 
+        self.addCount['total'] += 1
+        self.addCount['miss'] += 1
         self.cache[key] = value
         #kind of like acessing it putting something into cache makes it the most recently used
         #so he have to move it to the back of the cache 
         self.cache.move_to_end(key)
-        #this if statment is 
+        #this if statement is checking to make sure our cache is not out of bounds
         if len(self.cache) > self.capacity:
-            #Check order dict link for further syntaxing
-            #Orderdict normaly when you .popitem it will pop the last one on the stack
-            #in our situation that would get rid of the most recent accesed ellement
-            #by giving the paramater last = False it now pops the fron of the que
+            #Check order dict link for further syntax
+            #Orderdict normally when you .popitem it will pop the last one on the stack
+            #in our situation that would get rid of the most recent accessed element
+            #by giving the parameter last = False it now pops the from of the que
             self.cache.popitem(last = False)
- 
  
 
 
@@ -230,25 +249,48 @@ example_graph.add_edge(6, 1, 14)
 example_graph.kruskals()
 print(" ")
 
-# initializing our cache with the capacity of 2
-cache = efficentCaching(2) 
- 
- 
-cache.put(1, 1)
+"""
+
+simulating direct cache from my last 351 homework
+Although this implementation isn't quite the same
+let's say I put a key of 5 in. The code we have here
+is going to kick out the lru element even thought 
+"we don't have a set 5" like in the 351 hw assignment
+This code doesn't worry about sets its more smart just
+kicking out lru element. Knowing how this works we can still
+work around it. we can use the key to represent a set
+We can kick out elements in our set manually. 
+but this is why when it prints they are not represented
+in the set order they are represented in LRU being farthest 
+to the left and most recent item accessed furthest to the right
+
+"""
+# initializing our cache with the capacity of 4
+cache = efficentCaching(4) 
+#indexing starts at 0 
+#miss
+cache.put(2, 64)
 print(cache.cache)
-cache.put(2, 2)
+#miss 
+cache.put(0, 128)
 print(cache.cache)
-cache.get(1)
+#miss
+cache.put(0, 256)
 print(cache.cache)
-cache.put(3, 3)
-print(cache.cache)
+#hit 
 cache.get(2)
 print(cache.cache)
-cache.put(4, 4)
+#miss
+cache.put(3, 224)
 print(cache.cache)
+cache.put(1, 32)
+print(cache.cache)
+#hit
 cache.get(1)
 print(cache.cache)
+#hit
 cache.get(3)
 print(cache.cache)
-cache.get(4)
+#miss
+cache.put(0,256)
 print(cache.cache)
