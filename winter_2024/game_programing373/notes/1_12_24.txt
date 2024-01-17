@@ -1,0 +1,31 @@
+    Why do we use "new" in Java but not in CPP? (ex: Spaceship e = new Spaceship())
+        Java allocates this using the heap.
+        CPP will use the stack unless "new" is used then it will use the heap.
+            Code: Spaceship e; (vs.) Spaceship* g = new Spaceship();
+        This will need to be created as a pointer. Stores the address.
+        Stack allocations go away when function ends.
+        Pointers will not get cleaned up automatically since their addresses are the only things on the stack.
+        Need to use the "delete" keyword before function end.
+            Calls the destructor().
+            Ex: delete g;
+            Similar to "free" in C.
+        Destructor is done very similarly to the constructor but starts with "~".
+            Code: ~Spaceship();
+    Copy constructor takes existing object and creates new object that's identical.
+        Will pass by copy if you simply pass another spaceship object.
+        Use the "&" symbol to pass by reference
+            Ex: 
+                Spaceship(Spaceship& other);
+                Spaceship::Spaceship(Spaceship& other){
+                    this->name = other.name;
+                    this->hp = other.hp;
+                    this->shield = other.shield;
+                }
+            When calling the function you don't need the "&" symbol.
+                Ex: Spaceship f2(f)
+    Handling pointers:
+        void square(int* x){
+            x =x * *x;
+        }
+        int x = 42;
+        square(&x);
