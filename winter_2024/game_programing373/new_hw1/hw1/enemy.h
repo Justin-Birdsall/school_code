@@ -12,7 +12,7 @@ class Enemy {
 
         //constructor to take in the parameters that we want
         Enemy(std::string, int, float);
-        //opperand overloading
+        //operand overloading
         bool operator<(const Enemy& other) const;
         //Setters
         void setName(std::string);
