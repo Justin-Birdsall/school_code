@@ -1,0 +1,71 @@
+vim commands
+gg first line
+G last line
+xp swap character forward Xp for backwards
+w b one word right (w) left (b)
+da" delete the next double quoted string
++ move to the first nonwhitespace character of the next line
+S delete current line and go into insert mode
+I insert but at the begnning of the line
+ci" change whats inside the next double-quoted string
+ca{or [or ( change inside the brackets curls ect. 
+J - Join line below to the current one
+/(word) then N to
+H - move to top of screen
+M - move to middle of screen
+L - move to bottom of screen
+$ - jump to the end of the line 
+} - jump to next paragraph (or function/block, when editing code)
+{ - jump to previous paragraph (or function/block, when editing code)
+zz - center cursor on screen
+Ctrl + e - move screen down one line (without moving cursor)
+Ctrl + y - move screen up one line (without moving cursor)
+Ctrl + b - move screen up one page (cursor to last line)
+Ctrl + f - move screen down one page (cursor to first line)
+Ctrl + d - move cursor and screen down 1/2 page
+Ctrl + u - move cursor and screen up 1/2 page
+
+VS-Code commands
+ctr - h right group
+ctr - l  left group
+; t close/open side bar 
+alt shift f1 -> new terminal
+
+
+    Okay so essentially after coding on mac for a little bit I felt the superiority of the
+keyboard layout. the mac command button and its shortcuts are how I wish the windows button was used.
+So I did just that lmao. So my keyboard layout works like mac would I did this by mapping most of the 
+contrl commands to the windows button using windows powertoys. You can download it off the microsoft store.
+It does some pretty cool things on windows 11 and I think makes windows feel powerful. you can use alt enter to
+seach your apllications that isn't the disgusting one when you press windows. Also since Powertoys and vscode don't
+talk the best to each other I had to remap tilda to caps lock and so I have two escapes...
+
+powertoys: 
+tilda to caps lock
+alt left to win left 
+caps lock to esc 
+win left to alt
+
+ctrl
+ctrl
+ctrl w to win w -> win w to ctrl 
+ctrl numbers 1-5 to win 1-5 and visaver;{
+  "key": "ctrl+j",
+  "command": "selectNextSuggestion",
+  "when": "suggestWidgetVisible"
+},
+{
+  "key": "ctrl+k",
+  "command": "selectPrevSuggestion",
+  "when": "suggestWidgetVisible"
+},
+{
+  "key": "ctrl+j",
+  "command": "workbench.action.quickOpenSelectNext",
+  "when": "inQuickOpen"
+},
+{
+  "key": "ctrl+k",
+  "command": "workbench.action.quickOpenSelectPrevious",
+  "when": "inQuickOpen"
+}sa
