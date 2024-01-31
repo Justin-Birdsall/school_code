@@ -29,7 +29,6 @@ void Enemy::setHp(int hp){
 }
 void Enemy::setSpeed(float speed)
 {
-
     if(speed <= 1.0  && speed>=0.0) {this->speed = speed;}
     else{throw std::invalid_argument("Speed has to be between values 0.0 and 1.0");}
 }

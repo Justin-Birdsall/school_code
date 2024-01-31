@@ -30,12 +30,12 @@ ctr - h right group
 ctr - l  left group
 ; t close/open side bar 
 alt shift f1 -> new terminal
-
+control k to go from teminal to main code.  
 
     Okay so essentially after coding on mac for a little bit I felt the superiority of the
 keyboard layout. the mac command button and its shortcuts are how I wish the windows button was used.
 So I did just that lmao. So my keyboard layout works like mac would I did this by mapping most of the 
-contrl commands to the windows button using windows powertoys. You can download it off the microsoft store.
+ contrl commands to the windows button using windows powertoys. You can download it off the microsoft store.
 It does some pretty cool things on windows 11 and I think makes windows feel powerful. you can use alt enter to
 seach your apllications that isn't the disgusting one when you press windows. Also since Powertoys and vscode don't
 talk the best to each other I had to remap tilda to caps lock and so I have two escapes...
@@ -68,4 +68,4 @@ ctrl numbers 1-5 to win 1-5 and visaver;{
   "key": "ctrl+k",
   "command": "workbench.action.quickOpenSelectPrevious",
   "when": "inQuickOpen"
-}sa
+}s

@@ -4,9 +4,10 @@ var gl;
 var points;
 
 var NumPoints = 15000;
+
 function getRandomArbitrary(min, max) {  
   return Math.random() * (max - min) + min;  
-} 
+}
 window.onload = function init()
 {
     var canvas = document.getElementById( "gl-canvas" );
@@ -44,7 +45,7 @@ window.onload = function init()
     for ( var i = 0; points.length < NumPoints; ++i ) {
         var j = Math.floor(Math.random() * 3);
         p = add( points[i], vertices[j] );
-        p = scale( Math.random(), p );
+        p = scale( getRandomArbitrary(0.5, 0.425), p );
         points.push( p );
     }
 

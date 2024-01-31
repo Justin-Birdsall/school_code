@@ -16,7 +16,7 @@ class Enemy {
         bool operator<(const Enemy& other) const;
         bool operator>(const Enemy& other) const;
         bool operator==(const Enemy& other) const;
-        friend std::ostream& operator<<(std::ostream os, const Enemy& enemy)
+        friend std::ostream& operator<<(std::ostream& os, const Enemy& enemy);
         // Setters
         void setName(std::string);
         void setHp(int);

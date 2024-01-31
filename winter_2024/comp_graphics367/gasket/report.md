@@ -29,7 +29,8 @@ store our vectors in a matrix times the matrix by
 since we are in two dimensions we an plug in the amount we want to rotate by
 and it should output a new matrix for that position. 
 3)	Why does our code need to be placed into a window.onload function?
-the window onload is saying to use the webpage as our program. If this were on  
+the window onload is saying to use the webpage as our program. If this were 
+python, java, c++, we would have to first code for window to appear. Then add a canvas element.  
 
 4)	Paste your screenshots here on perturbing things.
 
