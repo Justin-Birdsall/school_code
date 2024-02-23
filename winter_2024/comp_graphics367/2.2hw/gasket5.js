@@ -2,16 +2,45 @@
 
 var canvas;
 var gl;
-
+let x1 = -1;
+let y1 = -1;  
+let x2 = 0;
+let y2 = 1;  
+let x3 = 1;
+let y3 = -1;  
 var points = [];
 
-var NumTimesToSubdivide = 5;
+var numTimesToSubdivide = 0;
 
-window.onload = function init()
+function init()
 {
     canvas = document.getElementById( "gl-canvas" );
-
+    canvas.addEventListener("mouseup", function(event) {
+        let rect = gl.canvas.getBoundingClientRect();
+        let newx = (event.clientX - rect.left) / canvas.width * 2 - 1;
+        let newy = (event.clientY - rect.top) / canvas.height * -2 + 1;
+        let vertex_id = document.querySelector('input[name="vertex"]:checked').value;
+        if (vertex_id == 0) {
+            x1 = newx;
+            y1 = newy;
+        } else if (vertex_id == 1) {
+            x2 = newx;
+            y2 = newy;
+        } else {
+            x3 = newx;
+            y3 = newy;
+        }
+        //console.log(newx, newy);
+    });
+    
     gl = WebGLUtils.setupWebGL( canvas );
+    let color_id = document.querySelector('input[name="color"]:checked').value; 
+    if(color_id == 0){
+        gl.clearColor( 1.0, 1.0, 1.0, 1.0 );
+    }
+    else if(color_id == 1){
+        gl.clearColor( 52/255, 49/255, 51/255, 1.0 ); 
+    }
     if ( !gl ) { alert( "WebGL isn't available" ); }
 
     //
@@ -20,20 +49,19 @@ window.onload = function init()
 
     // First, initialize the corners of our gasket with three points.
 
-    var vertices = [
-        vec2( -1, -1 ),
-        vec2(  0,  1 ),
-        vec2(  1, -1 )
+    let vertices = [
+        vec2(x1, y1),
+        vec2(x2, y2),
+        vec2(x3, y3)
     ];
-
     divideTriangle( vertices[0], vertices[1], vertices[2],
-                    NumTimesToSubdivide);
+                    numTimesToSubdivide);
 
     //
     //  Configure WebGL
     //
     gl.viewport( 0, 0, canvas.width, canvas.height );
-    gl.clearColor( 1.0, 1.0, 1.0, 1.0 );
+    //gl.clearColor( 1.0, 1.0, 1.0, 1.0 );
 
     //  Load shaders and initialize attribute buffers
 
@@ -44,13 +72,19 @@ window.onload = function init()
 
     var bufferId = gl.createBuffer();
     gl.bindBuffer( gl.ARRAY_BUFFER, bufferId );
-    gl.bufferData( gl.ARRAY_BUFFER, flatten(points), gl.STATIC_DRAW );
+    gl.bufferData( gl.ARRAY_BUFFER, 50000, gl.STATIC_DRAW );
+    gl.bufferSubData(gl.ARRAY_BUFFER, 0, flatten(points));
 
     // Associate out shader variables with our data buffer
 
     var vPosition = gl.getAttribLocation( program, "vPosition" );
     gl.vertexAttribPointer( vPosition, 2, gl.FLOAT, false, 0, 0 );
     gl.enableVertexAttribArray( vPosition );
+
+        document.getElementById("slider").onchange = function(event) {
+        numTimesToSubdivide = parseInt(event.target.value);
+    };
+
 
     render();
 };
@@ -86,8 +120,12 @@ function divideTriangle( a, b, c, count )
     }
 }
 
+window.onload = init;
+
 function render()
 {
     gl.clear( gl.COLOR_BUFFER_BIT );
     gl.drawArrays( gl.TRIANGLES, 0, points.length );
+    points = [];
+    requestAnimFrame(init);
 }
