@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<!--
+triangle.html
+Erik Fredericks, c/o Ed Angel
+
+The triangular hello world of WebGL
+-->
+<!DOCTYPE html>
+<!--
+triangle.html
+Erik Fredericks, c/o Ed Angel
+
+The triangular hello world of WebGL
+-->
+<html>
+<head>
+<meta charset="utf-8">
+<!-- Define our shaders -->
+<script id="vertex-shader" type="x-shader/x-vertex">
+  
+  attribute vec4 vPosition;
+  uniform float x;
+  uniform float y;
+  uniform float angle;
+  void main() {
+      vec4 pos = vPosition;
+      pos.x += x;
+      pos.y += y;
+      float s = sin(angle);
+      float c = cos(angle);
+      mat2 rotationMatrix = mat2(c, -s, s, c);
+      pos.xy = rotationMatrix * (pos.xy - vec2(x, y)) + vec2(x, y);
+      gl_Position = pos;
+  }
+
+</script>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
+<script id="fragment-shader" type="x-shader/x-fragment">
+  precision mediump float;
+  
+  void main() {
+    gl_FragColor = vec4(1.0, 0.0, 0.0, 1.0);
+  }
+</script>
+
+<script src="./libraries/Common/webgl-utils.js"></script>
+<script src="./libraries/Common/initShaders.js"></script>
+<script src="./libraries/Common/MV.js"></script>
+
+<!-- Added script for interaction -->
+<script src="triangle-interact.js"></script>
+
+</head>
+<body>
+<canvas id="gl-canvas" width="640" height="480">
+  Your browser doesn't support HTML5!
+</canvas>
+</body>
+</html>
