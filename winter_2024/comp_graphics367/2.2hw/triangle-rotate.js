@@ -9,6 +9,7 @@ This file does the actual drawing of the triangle
 var gl;
 var points;
 let x = 0.0;
+let y = 0.0;
 var w, z;
 var theta = 0.0;
 
@@ -47,7 +48,7 @@ window.onload = function init() {
   gl.useProgram(program);
   xLoc = gl.getUniformLocation(program, "x");
   yLoc = gl.getUniformLocation(program, "y");
-  thetaLoc = gl.getUniformLocation(program, "theta")
+  thetaLoc = gl.getUniformLocation(program, "theta");
 
   // load data into GPU
   var bufferID = gl.createBuffer();
