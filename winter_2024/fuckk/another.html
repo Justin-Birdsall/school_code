@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+    <title>Procedural Mountain and River</title>
+</head>
+
+<body>
+    <script>
+        // Setup
+        const scene = new THREE.Scene();
+        const camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 0.1, 1000);
+        const renderer = new THREE.WebGLRenderer();
+        renderer.setSize(window.innerWidth, window.innerHeight);
+        document.body.appendChild(renderer.domElement);
+
+        // Custom vertex shader
+        const vertexShader = `
+            void main() {
+                gl_Position = projectionMatrix * modelViewMatrix * vec4(position, 1.0);
+            }
+        `;
+
+        // Custom fragment shader
+        const fragmentShader = `
+            void main() {
+                gl_FragColor = vec4(0.0, 0.0, 1.0, 1.0); // Blue color
+            }
+        `;
+
+        // Create a plane geometry
+        const geometry = new THREE.PlaneGeometry(5, 5, 10, 10);
+
+        // Create a shader material
+        const material = new THREE.ShaderMaterial({
+            vertexShader: vertexShader,
+            fragmentShader: fragmentShader
+        });
+
+        // Create a mesh with the geometry and material
+        const mesh = new THREE.Mesh(geometry, material);
+        scene.add(mesh);
+
+        // Set camera position
+        camera.position.z = 5;
+
+        // Render function
+        function render() {
+            requestAnimationFrame(render);
+            renderer.render(scene, camera);
+        }
+
+        // Call render function
+        render();
+    </script>
+</body>
+
+</html>
